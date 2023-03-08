@@ -27,10 +27,10 @@
 #define NET_H
 
 #include "lwip/inet.h"
-#include "string.h"
+// #include "string.h"
 #include "lwip/sockets.h"
 #include "netdb.h"
-#include <tcpip_adapter.h>
+// #include <tcpip_adapter.h>
 /* Local helper functions for this port */
 
 #endif

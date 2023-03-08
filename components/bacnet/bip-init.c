@@ -38,7 +38,9 @@
 #include "bacdcode.h"
 #include "bip.h"
 #include "net.h"
+#include "esp_log.h"
 
+#define TAG "BIP"
 /** @file linux/bip-init.c  Initializes BACnet/IP interface (Linux). */
 
 
@@ -62,26 +64,23 @@ void bip_set_interface(char *ifname)
 {
     struct in_addr local_address;
     struct in_addr broadcast_address;
-    struct in_addr netmask;
 
     /* setup local address */
-	tcpip_adapter_ip_info_t if_info;
-	tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &if_info);
+
 	
-	local_address.s_addr = *(u32_t *)&if_info.ip;
+	local_address.s_addr = htonl(0xc0a801ab);
 	
 
-    debug_printf("IP Address: %s\n", inet_ntoa(local_address));
+    ESP_LOGI(TAG,"IP Address: %s", inet_ntoa(local_address));
     /* setup local broadcast address */
-	netmask.s_addr = *(u32_t *)&if_info.netmask;
 	
 	broadcast_address = local_address;
-	broadcast_address.s_addr |= (~netmask.s_addr);
+	broadcast_address.s_addr = htonl(0xc0a801ff);
 
     bip_set_broadcast_addr(broadcast_address.s_addr);
-	debug_printf("IP Broadcast Address: %s\n",
+	ESP_LOGI(TAG,"IP Broadcast Address: %s",
 		inet_ntoa(broadcast_address));
-	debug_printf("UDP Port: 0x%04X [%hu]\n", ntohs(bip_get_port()),
+	ESP_LOGI(TAG,"UDP Port: 0x%04X [%hu]", ntohs(bip_get_port()),
 		ntohs(bip_get_port()));
 
 }

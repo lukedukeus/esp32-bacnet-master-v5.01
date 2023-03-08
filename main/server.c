@@ -146,7 +146,7 @@ int server(uint32_t id)
     /* allow the device ID to be set */
     Device_Set_Object_Instance_Number(id);
     printf("BACnet Server Demo\n" "BACnet Stack Version %s\n"
-        "BACnet Device ID: %u\n" "Max APDU: %d\n", BACnet_Version,
+        "BACnet Device ID: %lu\n" "Max APDU: %d\n", BACnet_Version,
         Device_Object_Instance_Number(), MAX_APDU);
     /* load any static address bindings to show up
        in our device bindings list */

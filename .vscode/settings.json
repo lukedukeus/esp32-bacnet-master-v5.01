@@ -1,0 +1,27 @@
+{
+  "C_Cpp.intelliSenseEngine": "Tag Parser",
+  "idf.adapterTargetName": "esp32",
+  "idf.customExtraPaths": "c:\\Espressif\\v5.0.1\\tools\\tools\\xtensa-esp-elf-gdb\\11.2_20220823\\xtensa-esp-elf-gdb\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\riscv32-esp-elf-gdb\\11.2_20220823\\riscv32-esp-elf-gdb\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\xtensa-esp32s2-elf\\esp-2022r1-11.2.0\\xtensa-esp32s2-elf\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\xtensa-esp32s3-elf\\esp-2022r1-11.2.0\\xtensa-esp32s3-elf\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\riscv32-esp-elf\\esp-2022r1-11.2.0\\riscv32-esp-elf\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\esp32ulp-elf\\2.35_20220830\\esp32ulp-elf\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\cmake\\3.24.0\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\openocd-esp32\\v0.11.0-esp32-20221026\\openocd-esp32\\bin;c:\\Espressif\\v5.0.1\\tools\\tools\\ninja\\1.10.2;c:\\Espressif\\v5.0.1\\tools\\tools\\idf-exe\\1.0.3;c:\\Espressif\\v5.0.1\\tools\\tools\\ccache\\4.6.2\\ccache-4.6.2-windows-x86_64;c:\\Espressif\\v5.0.1\\tools\\tools\\dfu-util\\0.9\\dfu-util-0.9-win64;c:\\Espressif\\v5.0.1\\tools\\tools\\esp-rom-elfs\\20220823",
+  "idf.customExtraVars": {
+    "OPENOCD_SCRIPTS": "c:\\Espressif\\v5.0.1\\tools\\tools\\openocd-esp32\\v0.11.0-esp32-20221026/openocd-esp32/share/openocd/scripts",
+    "IDF_CCACHE_ENABLE": "1",
+    "ESP_ROM_ELF_DIR": "c:\\Espressif\\v5.0.1\\tools\\tools\\esp-rom-elfs\\20220823/"
+  },
+  "idf.espIdfPathWin": "c:\\Espressif\\v5.0.1\\esp-idf",
+  "idf.openOcdConfigs": ["board/esp32-wrover-kit-3.3v.cfg"],
+  "idf.pythonBinPathWin": "c:\\Espressif\\v5.0.1\\tools\\python_env\\idf5.0_py3.8_env\\Scripts\\python.exe",
+  "idf.toolsPathWin": "c:\\Espressif\\v5.0.1\\tools",
+  "workbench.colorCustomizations": {
+    "commandCenter.border": "#e7e7e799",
+    "statusBar.background": "#ff3d00",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#ff6433",
+    "statusBarItem.remoteBackground": "#ff3d00",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#ff3d00",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#ff3d0099",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#ff3d00"
+}

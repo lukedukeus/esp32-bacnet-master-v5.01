@@ -127,7 +127,7 @@ bool Binary_Value_Valid_Instance(
 unsigned Binary_Value_Count(
     void)
 {
-    return MAX_BINARY_VALUES;
+    return 1;
 }
 
 /* we simply have 0-n object instances.  Yours might be */

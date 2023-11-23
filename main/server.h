@@ -1,1 +1,0 @@
-int server(uint32_t id);

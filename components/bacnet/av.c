@@ -149,7 +149,7 @@ bool Analog_Value_Valid_Instance(
 unsigned Analog_Value_Count(
     void)
 {
-    return MAX_ANALOG_VALUES;
+    return 1;
 }
 
 /* we simply have 0-n object instances.  Yours might be */

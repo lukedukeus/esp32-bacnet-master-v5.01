@@ -24,5 +24,14 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#ff3d00",
-  "idf.portWin": "COM11"
+  "idf.portWin": "COM5",
+  "files.associations": {
+    "client.h": "c",
+    "led.h": "c",
+    "wifi.h": "c",
+    "bactext.h": "c",
+    "bi.h": "c",
+    "ai.h": "c",
+    "client_task.h": "c"
+  }
 }

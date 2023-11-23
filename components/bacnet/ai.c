@@ -162,7 +162,7 @@ bool Analog_Input_Valid_Instance(
 unsigned Analog_Input_Count(
     void)
 {
-    return MAX_ANALOG_INPUTS;
+    return 1;
 }
 
 /* we simply have 0-n object instances.  Yours might be */

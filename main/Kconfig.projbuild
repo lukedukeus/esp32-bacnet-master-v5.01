@@ -1,0 +1,78 @@
+menu "Example Configuration"
+
+    orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
+
+    choice LED_TYPE
+        prompt "LED type"
+        default LED_TYPE_GPIO if IDF_TARGET_ESP32 || IDF_TARGET_ESP32C2
+        default LED_TYPE_RMT
+        help
+            LED type
+
+        config LED_TYPE_RMT
+            bool "RMT - Addressable LED"
+            help
+                RMT
+
+        config LED_TYPE_GPIO
+            bool "GPIO"
+            help
+                GPIO
+
+    endchoice
+
+    config LED_GPIO
+        int "LED GPIO number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 8 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32H2 || IDF_TARGET_ESP32C2
+        default 18 if IDF_TARGET_ESP32S2
+        default 48 if IDF_TARGET_ESP32S3
+        default 2
+        help
+            GPIO number (IOxx) to turn on and off or the RMT signal for the addressable LED.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used.
+
+    config BUTTON_GPIO
+        int "Button GPIO number"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 0
+        help
+            GPIO number (IOxx) to read the button state.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used.
+            
+    config SERVER_DEVICE_ID
+        int "Bacnet device id"
+        range 0 4194304
+        default 200004 if IDF_TARGET_ESP32C3
+        default 200003
+        help
+            Bacnet server device id
+
+    config CLIENT_DEVICE_ID
+        int "Bacnet device id"
+        range 0 4194304
+        default 200003 if IDF_TARGET_ESP32C3
+        default 200004
+        help
+            Bacnet client device id
+
+    config WIFI_SSID
+        string "WiFi SSID"
+        default "SSID"
+        help
+            WiFi SSID
+
+    config WIFI_PASSWORD
+        string "WiFi password"
+        default "PASSWORD"
+        help
+            WiFi password
+
+    config WIFI_MAX_RETRY
+        int "WiFi max retry"
+        range 1 10
+        default 5
+        help
+            WiFi max retry
+
+endmenu

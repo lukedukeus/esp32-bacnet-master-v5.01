@@ -33,5 +33,6 @@
     "bi.h": "c",
     "ai.h": "c",
     "client_task.h": "c"
-  }
+  },
+  "cmake.configureOnOpen": false
 }

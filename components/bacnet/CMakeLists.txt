@@ -112,4 +112,6 @@ idf_component_register(
 "whois.c"
 "wp.c"
 "wpm.c"
-    INCLUDE_DIRS "include")
+    INCLUDE_DIRS "include"
+    REQUIRES esp_wifi
+)

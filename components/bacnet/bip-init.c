@@ -32,17 +32,17 @@
  -------------------------------------------
 ####COPYRIGHTEND####*/
 
-#include <stdint.h>     /* for standard integer types uint8_t etc. */
-#include <stdbool.h>    /* for the standard bool type. */
+#include <stdint.h>  /* for standard integer types uint8_t etc. */
+#include <stdbool.h> /* for the standard bool type. */
 #include <debug.h>
 #include "bacdcode.h"
 #include "bip.h"
 #include "net.h"
 #include "esp_log.h"
+#include "esp_netif.h"
 
 #define TAG "BIP"
 /** @file linux/bip-init.c  Initializes BACnet/IP interface (Linux). */
-
 
 /* gets an IP address by name, where name can be a
    string that is an IP address in dotted form, or
@@ -57,7 +57,7 @@ long bip_getaddrbyname(
     if ((host_ent = gethostbyname(host_name)) == NULL)
         return 0;
 
-    return *(long *) host_ent->h_addr;
+    return *(long *)host_ent->h_addr;
 }
 
 void bip_set_interface(char *ifname)
@@ -66,25 +66,24 @@ void bip_set_interface(char *ifname)
     struct in_addr broadcast_address;
 
     /* setup local address */
+    esp_netif_ip_info_t ip_info;
+    esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info);
 
-	
-	local_address.s_addr = htonl(0xc0a801ab);
-	
+    local_address.s_addr = ip_info.ip.addr;
 
-    ESP_LOGI(TAG,"IP Address: %s", inet_ntoa(local_address));
+    ESP_LOGI(TAG, "IP Address: %s", inet_ntoa(local_address));
+
     /* setup local broadcast address */
-	
-	broadcast_address = local_address;
-	broadcast_address.s_addr = htonl(0xc0a801ff);
+    broadcast_address = local_address;
+    broadcast_address.s_addr = ip_info.ip.addr | ~ip_info.netmask.addr;
 
     bip_set_broadcast_addr(broadcast_address.s_addr);
-	ESP_LOGI(TAG,"IP Broadcast Address: %s",
-		inet_ntoa(broadcast_address));
-	ESP_LOGI(TAG,"UDP Port: 0x%04X [%hu]", ntohs(bip_get_port()),
-		ntohs(bip_get_port()));
+    ESP_LOGI(TAG, "IP Broadcast Address: %s", inet_ntoa(broadcast_address));
+    ESP_LOGI(TAG, "UDP Port: 0x%04X [%hu]", ntohs(bip_get_port()), ntohs(bip_get_port()));
 
+    // attach an event handler to update the ip info when network changes
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, ESP_EVENT_ANY_ID, &got_ip_event_handler, NULL));
 }
-
 
 /** Initialize the BACnet/IP services at the given interface.
  * @ingroup DLBIP
@@ -106,11 +105,11 @@ void bip_set_interface(char *ifname)
 bool bip_init(
     char *ifname)
 {
-    int status = 0;     /* return from socket lib calls */
+    int status = 0; /* return from socket lib calls */
     struct sockaddr_in sin;
     int sockopt = 0;
     int sock_fd = -1;
-	bip_set_interface(NULL);
+    bip_set_interface(NULL);
     /* assumes that the driver has already been initialized */
     sock_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     bip_set_socket(sock_fd);
@@ -121,9 +120,10 @@ bool bip_init(
     sockopt = 1;
     status =
         setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &sockopt,
-        sizeof(sockopt));
-    if (status < 0) {
-		printf("SO_REUSEADDR,setsockopt faild,status = %d\r\n", status); //edit here
+                   sizeof(sockopt));
+    if (status < 0)
+    {
+        printf("SO_REUSEADDR,setsockopt faild,status = %d\r\n", status); // edit here
         close(sock_fd);
         bip_set_socket(-1);
         return status;
@@ -131,9 +131,10 @@ bool bip_init(
     /* allow us to send a broadcast */
     status =
         setsockopt(sock_fd, SOL_SOCKET, SO_BROADCAST, &sockopt,
-        sizeof(sockopt));
-    if (status < 0) {
-		printf("SO_BROADCAST,setsockopt faild,status = %d\r\n", status); //edit here
+                   sizeof(sockopt));
+    if (status < 0)
+    {
+        printf("SO_BROADCAST,setsockopt faild,status = %d\r\n", status); // edit here
         close(sock_fd);
         bip_set_socket(-1);
         return false;
@@ -144,9 +145,10 @@ bool bip_init(
     sin.sin_port = bip_get_port();
     memset(&(sin.sin_zero), '\0', sizeof(sin.sin_zero));
     status =
-        bind(sock_fd, (const struct sockaddr *) &sin, sizeof(struct sockaddr));
-    if (status < 0) {
-		printf("bind faild,status = %d\r\n", status); //edit here
+        bind(sock_fd, (const struct sockaddr *)&sin, sizeof(struct sockaddr));
+    if (status < 0)
+    {
+        printf("bind faild,status = %d\r\n", status); // edit here
         close(sock_fd);
         bip_set_socket(-1);
         return false;
@@ -157,13 +159,14 @@ bool bip_init(
 
 /** Cleanup and close out the BACnet/IP services by closing the socket.
  * @ingroup DLBIP
-  */
+ */
 void bip_cleanup(
     void)
 {
     int sock_fd = 0;
 
-    if (bip_valid()) {
+    if (bip_valid())
+    {
         sock_fd = bip_socket();
         close(sock_fd);
     }
@@ -171,5 +174,3 @@ void bip_cleanup(
 
     return;
 }
-
-
